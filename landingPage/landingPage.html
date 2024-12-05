@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to To-Do List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* General body styling */
+    body {
+      background: linear-gradient(135deg, #fef6e4, #fff5e1); /* Subtle gradient for depth */
+      color: #ff8800;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* Header Styling */
+    .header {
+      background-color: #ff8800;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      text-align: center;
+      padding: 50px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 2s ease-in-out; /* Fade-in effect */
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      color: #ff8800;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2); /* Text shadow for elegance */
+    }
+    .hero p {
+      font-size: 1.3rem;
+      margin: 20px 0;
+      color: #555; /* Slightly muted text for better readability */
+    }
+
+    /* buttons */
+    .btns {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      border-radius: 50px; /* Rounded buttons for modern feel */
+      transition: all 0.3s ease-in-out; /* Smooth hover effect */
+    }
+    .btn-signup {
+      background-color: #ff8800;
+      color: white;
+      border: none;
+    }
+    .btn-signup:hover {
+      background-color: none;
+      border: 2px solid #ff8800;
+      transform: scale(1.05); /* adding zoom effect*/
+    }
+    .btn-login {
+      border: 2px solid #ff8800;
+      color: #ff8800;
+      background: none;
+    }
+    .btn-login:hover {
+      background-color: #ff8800;
+      color: white;
+      transform: scale(1.05); /*adding zoom effect */
+    }
+
+    /* Footer Style */
+    .footer {
+      background-color: #ff8800;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 0.9rem;
+    }
+
+    /*fade-in animation */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsiveness*/
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .cta-buttons .btn {
+        font-size: 1rem;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>Welcome to To-Do List</h1>
+  </div>
+
+  <!--The Hero-->
+  <div class="hero">
+    <h1>Stay Organized, Stay Productive</h1>
+    <p>Effortlessly manage your tasks and achieve your goals. Sign up now and simplify your life!</p>
+    <div class="btns">
+      <a href="../signUp/signup.html" class="btns btn-signup btn-lg">Sign Up</a>
+      <a href="../login/login.html" class="btns btn-login btn-lg">Login</a>
+    </div>
+  </div>
+
+  <!--Footer -->
+  <div class="footer">
+    <p>&copy; 2024 To-Do List App. All rights reserved.</p>
+  </div>
+
+  <!--Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
