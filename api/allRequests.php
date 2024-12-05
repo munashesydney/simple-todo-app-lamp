@@ -137,9 +137,19 @@ function getTasks()
 {
     global $mysqli;
     $userId = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
+    $type = filter_input(INPUT_POST, 'type', FILTER_SANITIZE_STRING);
 
     // Query to fetch all tasks
     $query = "SELECT id, title, due_date, status FROM ToDoList WHERE user_id='$userId'";
+    
+    if($type == "pending"){
+        $query = "SELECT id, title, due_date, status FROM ToDoList WHERE user_id='$userId' AND status='Pending'";
+    }else if($type == "progress"){
+        $query = "SELECT id, title, due_date, status FROM ToDoList WHERE user_id='$userId' AND status='In Progress'";
+    }
+    
+    //default is everything
+    
     $result = mysqli_query($mysqli, $query);
 
     if (!$result) {

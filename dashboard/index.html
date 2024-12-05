@@ -40,10 +40,41 @@
       background-color: #ff6f00;
     }
     .footer {
+      width:100%;
       background-color: #ff8800;
       color: white;
       text-align: center;
       padding: 10px 0;
+
+    }
+    
+    #filter {
+      width: auto;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ced4da;
+      border-radius: 5px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+      appearance: none; 
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      background-size: 12px;
+    }
+
+    #filter:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+    
+     .task-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -82,16 +113,23 @@
     </div>
     
     <!-- Task List Section -->
-    <div class="row justify-content-center mt-4 mb-4">
-      <div class="col-md-8">
-        <div class="card p-3">
-          <h4 class="text-center">Your Tasks</h4>
-          <ul id="task-list" class="list-group">
-            <!-- INitial loading progress before removal-->
-          </ul>
+  <div class="row justify-content-center mt-4 mb-4">
+    <div class="col-md-8">
+      <div class="card p-4">
+        <div class="task-header">
+          <h4 class="task-title">Your Tasks</h4>
+          <select id="filter">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="progress">In Progress</option>
+          </select>
         </div>
+        <ul id="task-list" class="list-group">
+        </ul>
       </div>
     </div>
+  </div>
+    
   </div>
     
 
@@ -114,9 +152,17 @@
     
 document.addEventListener("DOMContentLoaded", function () {
     // lets get the initial tasks for the user
-    fetchTasks();
+    fetchTasks('all');
     
 });
+
+    const filter = document.getElementById('filter');
+
+    // Add event listener for the change event
+    filter.addEventListener('change', (event) => {
+      console.log(`You selected: ${event.target.value}`);
+      fetchTasks(event.target.value);
+    });
       
     document.getElementById('task-form').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -248,7 +294,7 @@ fetch('../api/allRequests.php', {
         console.log('Response:', data);
         if (data.status === 'success') {
             alert(data.message);
-            fetchTasks();
+            fetchTasks('all');
         } else {
             alert(`Error: ${data.message}`);
         }
@@ -260,8 +306,11 @@ fetch('../api/allRequests.php', {
 
     }
     
-    const theBody = {request: 'get_tasks', user_id: userId};
-     function fetchTasks() {
+    
+     function fetchTasks(type) {
+         const theBody = {request: 'get_tasks', user_id: userId, type: type};
+         
+         
         fetch('../api/allRequests.php', {
             method: 'POST',
             headers: {
