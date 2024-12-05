@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const dueDateInput = document.getElementById('due-date-input').value;
 
       if (taskInput && dueDateInput) {
-        addTaskToList(taskInput, statusInput, dueDateInput);
+        //addTaskToList(taskInput, statusInput, dueDateInput);
         // Save the task to server
         addTaskToServer(taskInput, statusInput, dueDateInput);
 
@@ -212,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
       alert('You have logged out.');
       localStorage.removeItem("firstname");
       localStorage.removeItem("lastname");
+      localStorage.removeItem("userId");
       location.href="../index.html";
     });
     
@@ -247,6 +248,7 @@ fetch('../api/allRequests.php', {
         console.log('Response:', data);
         if (data.status === 'success') {
             alert(data.message);
+            fetchTasks();
         } else {
             alert(`Error: ${data.message}`);
         }
@@ -258,13 +260,14 @@ fetch('../api/allRequests.php', {
 
     }
     
+    const theBody = {request: 'get_tasks', user_id: userId};
      function fetchTasks() {
         fetch('../api/allRequests.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'request=get_tasks'
+            body: new URLSearchParams(theBody).toString()
         })
         .then(response => {
             if (!response.ok) {
@@ -273,6 +276,11 @@ fetch('../api/allRequests.php', {
             return response.text(); 
         })
         .then(html => {
+         
+    if(html == "<center>No tasks to show</center>"){
+        document.getElementById('task-list').innerHTML = html;
+        return;
+    }
             const parser = new DOMParser();
             const doc = parser.parseFromString(html, 'text/html');
             const taskList = document.getElementById('task-list');

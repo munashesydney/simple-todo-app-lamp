@@ -136,9 +136,10 @@ function addTask()
 function getTasks()
 {
     global $mysqli;
+    $userId = filter_input(INPUT_POST, 'user_id', FILTER_SANITIZE_NUMBER_INT);
 
     // Query to fetch all tasks
-    $query = "SELECT id, title, due_date, status FROM ToDoList";
+    $query = "SELECT id, title, due_date, status FROM ToDoList WHERE user_id='$userId'";
     $result = mysqli_query($mysqli, $query);
 
     if (!$result) {
@@ -147,7 +148,9 @@ function getTasks()
     }
 
     // Generate HTML
-    $html = '';
+    $html = '<center>No tasks to show</center>';
+    $count   = 0;
+    
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
         $title = htmlspecialchars($row['title']);
