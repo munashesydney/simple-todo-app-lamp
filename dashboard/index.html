@@ -82,7 +82,7 @@
     </div>
     
     <!-- Task List Section -->
-    <div class="row justify-content-center mt-4">
+    <div class="row justify-content-center mt-4 mb-4">
       <div class="col-md-8">
         <div class="card p-3">
           <h4 class="text-center">Your Tasks</h4>
@@ -93,6 +93,7 @@
       </div>
     </div>
   </div>
+    
 
   <!-- Footer -->
   <div class="footer">
@@ -100,7 +101,16 @@
   </div>
 
   <script>
-  var userId = 1;
+  var userId = localStorage.getItem('userId');
+  
+  if(!userId || userId == null || userId == ""){
+      location.href="../index.html";
+  }
+  
+  var firstname = localStorage.getItem('firstname');
+  var lastname = localStorage.getItem('lastname');
+  
+  document.getElementById("username").textContent = firstname + " " + lastname; 
     
 document.addEventListener("DOMContentLoaded", function () {
     // lets get the initial tasks for the user
@@ -200,7 +210,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Logout button functionality
     document.getElementById('logout-btn').addEventListener('click', () => {
       alert('You have logged out.');
-      window.location.reload();
+      localStorage.removeItem("firstname");
+      localStorage.removeItem("lastname");
+      location.href="../index.html";
     });
     
     //Server side calling here
