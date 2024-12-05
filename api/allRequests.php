@@ -153,7 +153,7 @@ function getTasks()
         $title = htmlspecialchars($row['title']);
         $dueDate = $row['due_date'] ? htmlspecialchars($row['due_date']) : 'No due date';
         $status = htmlspecialchars($row['status']);
-        $statusClass = ($status === 'Pending') ? 'bg-warning text-dark' : 'bg-success text-white';
+        $statusClass = ($status === 'Pending') ? 'bg-warning text-dark' : 'bg-info text-dark';
 
         $html .= '
             <li class="list-group-item">
