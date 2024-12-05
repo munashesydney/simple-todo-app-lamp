@@ -95,7 +95,20 @@ function register()
         echo json_encode(['status' => 'error', 'message' => 'Registration failed']);
     }
     }catch(Exception $e){
-        echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        if (strpos($e->getMessage(), 'Users.username') !== false) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'The username is already in use. Please choose another one.',
+            ]);
+        } elseif (strpos($e->getMessage(), 'Users.email') !== false) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'The email is already registered. Please use another email.',
+            ]);
+        }else{
+            echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        
+        }
     }
 }
 
