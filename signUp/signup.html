@@ -62,9 +62,21 @@
     <div class="form-card">
       <h2 class="text-center text-orange">Create Your Account</h2>
       <form id="signup-form">
+          <div class="mb-3">
+          <label for="first_name" class="form-label">First Name</label>
+          <input type="text" class="form-control" id="first_name" placeholder="Enter your first name" required>
+        </div>
+          <div class="mb-3">
+          <label for="last_name" class="form-label">Last Name</label>
+          <input type="text" class="form-control" id="last_name" placeholder="Enter your last name" required>
+        </div>
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+        </div>
+          <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
@@ -93,9 +105,12 @@
     document.getElementById('signup-form').addEventListener('submit', function (e) {
       e.preventDefault();
 
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const confirmPassword = document.getElementById('confirm-password').value.trim();
+      const first_name = document.getElementById('first_name').value;
+      const last_name = document.getElementById('last_name').value;
+      const username = document.getElementById('username').value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById('password').value;      
+      const confirmPassword = document.getElementById('confirm-password').value;
 
       if (password !== confirmPassword) {
         alert('Passwords do not match!');
@@ -108,7 +123,10 @@
     // Info needed to register
     const info = {
         request: 'register',
+        first_name: first_name,
+        last_name: last_name,
         username: username,
+        email: email,
         password: password
     };
       fetch('../api/allRequests.php', {

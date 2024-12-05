@@ -58,11 +58,12 @@ function login()
         return;
     }
 
-    $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+    $query = "SELECT * FROM Users WHERE username = '$username' AND password = '$password'";
     $result = mysqli_query($mysqli, $query);
 
     if ($result && mysqli_num_rows($result) > 0) {
-        echo json_encode(['status' => 'success', 'message' => 'Login successful']);
+        $user = $result->fetch_assoc();
+        echo json_encode(['status' => 'success', 'message' => 'Login successful', 'user_id' => $user['id']]);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Invalid credentials']);
     }
@@ -72,20 +73,29 @@ function login()
 function register()
 {
     global $mysqli;
-
+    try{
+        
+    $first_name = filter_input(INPUT_POST, 'first_name', FILTER_SANITIZE_STRING);
+    $last_name = filter_input(INPUT_POST, 'last_name', FILTER_SANITIZE_STRING);
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+    $date = date('Y-m-d H:i:s');
 
-    if (!$username || !$password) {
+    if (!$username || !$password || !$email) {
         echo json_encode(['status' => 'error', 'message' => 'Username or password missing']);
         return;
     }
+  
 
-    $query = "INSERT INTO users (username, password) VALUES ('$username', '$password')";
+    $query = "INSERT INTO Users (username, email, password, first_name, last_name, created_at) VALUES ('$username', '$email', '$password','$first_name', '$last_name', '$date')";
     if (mysqli_query($mysqli, $query)) {
         echo json_encode(['status' => 'success', 'message' => 'User registered successfully']);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Registration failed']);
+    }
+    }catch(Exception $e){
+        echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
     }
 }
 
