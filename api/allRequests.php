@@ -63,7 +63,7 @@ function login()
 
     if ($result && mysqli_num_rows($result) > 0) {
         $user = $result->fetch_assoc();
-        echo json_encode(['status' => 'success', 'message' => 'Login successful', 'user_id' => $user['id']]);
+        echo json_encode(['status' => 'success', 'message' => 'Login successful', 'user_id' => $user['id'], 'firstname' => $user['first_name'], 'lastname' => $user['last_name']]);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Invalid credentials']);
     }
